@@ -5,9 +5,18 @@ import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import org.gradle.process.ExecResult
 
-class YarnTask
-    extends DefaultTask
-{
+import org.gradle.api.tasks.*;
+import org.gradle.api.file.FileCollection;
+
+@CacheableTask
+class YarnTask extends DefaultTask {
+
+    @InputFiles
+    FileCollection sourceFiles = project.files("${project.projectDir}/package.json", "${project.projectDir}/src")
+
+    @OutputDirectory
+    File outputDir = project.file("${project.projectDir}/dist")
+
     protected YarnExecRunner runner
 
     private Iterable<?> args = []
