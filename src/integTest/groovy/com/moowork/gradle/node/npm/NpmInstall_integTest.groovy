@@ -1,12 +1,12 @@
-package com.moowork.gradle.node.yarn
+package com.moowork.gradle.node.npm
 
 import com.moowork.gradle.AbstractIntegTest
 import org.gradle.testkit.runner.TaskOutcome
 
-class YarnInstall_integTest
+class NpmInstall_integTest
     extends AbstractIntegTest
 {
-    def 'install packages with yarn'()
+    def 'install packages with npm'()
     {
         given:
         writeBuild( '''
@@ -15,29 +15,21 @@ class YarnInstall_integTest
             }
 
             node {
-                version = "6.9.1"
-                yarnVersion = "0.16.1"
+                npmVersion = "6.1.0"
                 download = true
                 workDir = file('build/node')
-                yarnWorkDir = file('build/yarn')
             }
         ''' )
         writeEmptyPackageJson()
 
         when:
-        def result = buildTask( 'yarn' )
+        def result = buildTask( 'npmInstall' )
 
         then:
         result.outcome == TaskOutcome.SUCCESS
-
-        when:
-        result = buildTask( 'yarn' )
-
-        then:
-        result.outcome == TaskOutcome.UP_TO_DATE
     }
 
-    def 'install packages with yarn and and postinstall task requiring node and yarn'()
+    def 'install packages with npm and postinstall task requiring npm and node'()
     {
         given:
         writeBuild( '''
@@ -45,35 +37,28 @@ class YarnInstall_integTest
                 id 'com.moowork.node'
             }
             node {
-                version = "6.9.1"
-                yarnVersion = "0.16.1"
+                npmVersion = "6.1.0"
                 download = true
                 workDir = file('build/node')
-                yarnWorkDir = file('build/yarn')
             }
         ''' )
-        writePackageJson(""" {
+        writePackageJson( """ {
             "name": "example",
             "dependencies": {},
             "versionOutput" : "node --version",
-            "postinstall" : "yarn run versionOutput"
+            "postinstall" : "npm run versionOutput"
         }
-        """)
+        """ )
+        writeEmptyPackageLockJson()
 
         when:
-        def result = buildTask( 'yarn' )
+        def result = buildTask( 'npmInstall' )
 
         then:
         result.outcome == TaskOutcome.SUCCESS
-
-        when:
-        result = buildTask( 'yarn' )
-
-        then:
-        result.outcome == TaskOutcome.UP_TO_DATE
     }
 
-    def 'install packages with yarn in different directory'()
+    def 'install packages with npm in different directory'()
     {
         given:
         writeBuild( '''
@@ -82,11 +67,9 @@ class YarnInstall_integTest
             }
 
             node {
-                version = "6.9.1"
-                yarnVersion = "0.15.1"
+                npmVersion = "6.1.0"
                 download = true
                 workDir = file('build/node')
-                yarnWorkDir = file('build/yarn')
                 nodeModulesDir = file('subdirectory')
             }
         ''' )
@@ -95,11 +78,12 @@ class YarnInstall_integTest
             "dependencies": {
             }
         }""" )
+        writeEmptyPackageLockJson( 'subdirectory/package-lock.json' )
 
         when:
-        def result = buildTask( 'yarn' )
+        def result = build( 'npmInstall' )
 
         then:
-        result.outcome == TaskOutcome.SUCCESS
+        result.task( ':npmInstall' ).outcome == TaskOutcome.SUCCESS
     }
 }

@@ -14,12 +14,17 @@ apply from: "$rootDir/gradle/coverage.gradle"
 apply from: "$rootDir/gradle/travis-ci.gradle"
 apply from: "$rootDir/gradle/publishing.gradle"
 
-ext.compatibilityVersion = '1.6'
+ext.compatibilityVersion = '1.8'
 sourceCompatibility = compatibilityVersion
 targetCompatibility = compatibilityVersion
 
 repositories {
     jcenter()
+}
+
+configurations {
+    integTestCompile.extendsFrom testCompile
+    integTestRuntime.extendsFrom testRuntime
 }
 
 dependencies {
@@ -38,9 +43,13 @@ tasks.withType( Test ) {
     }
 }
 
-test {
-    if ( project.hasProperty( 'skipIT' ) )
-    {
-        exclude '**/*_integTest*'
-    }
+sourceSets {
+    integTest
+}
+
+task integTest( type: Test ) {
+    shouldRunAfter test
+
+    testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
 }

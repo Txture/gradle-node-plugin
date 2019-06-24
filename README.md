@@ -1,11 +1,9 @@
-<a href="#support"><img align="right" src="docs/images/support.png?raw=true"></a>
-
 # Gradle Plugin for Node
 
 [![Build Status](https://travis-ci.org/srs/gradle-node-plugin.svg?branch=master)](https://travis-ci.org/srs/gradle-node-plugin)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/06pg08c36mnes0w3?svg=true)](https://ci.appveyor.com/project/srs/gradle-node-plugin)
 [![License](https://img.shields.io/github/license/srs/gradle-node-plugin.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-![Version](https://img.shields.io/badge/Version-1.2.0-orange.svg)
+![Version](https://img.shields.io/badge/Version-1.3.1-orange.svg)
 
 This plugin enabled you to use a lot of [NodeJS](https://nodejs.org)-based technologies as part of your 
 build without having NodeJS installed locally on your system. It integrates the following NodeJS-based system
@@ -40,6 +38,7 @@ issue to [GitHub Issues](https://github.com/srs/gradle-node-plugin/issues).
 
 Here's the documentation for older releases of the plugin:
 
+* [1.2.0](https://github.com/srs/gradle-node-plugin/blob/v1.2.0/README.md)
 * [1.1.1](https://github.com/srs/gradle-node-plugin/blob/v1.1.1/README.md)
 * [1.1.0](https://github.com/srs/gradle-node-plugin/blob/v1.1.0/README.md)
 * [1.0.1](https://github.com/srs/gradle-node-plugin/blob/v1.0.1/README.md)
@@ -65,11 +64,6 @@ To build the plugin, just type the following command:
 Contributions are always welcome! If you'd like to contribute (and we hope you do) please send 
 one of the existing contributors a nudge.
 
-## <a name="support"></a> Support this project :heart:
-
-This plugin is open source project and completely free to use. If you are using this project in your products/projects, please consider sponsoring to ensure it is actively developed and maintained.
-
-[Donate via PayPal (one time)](https://www.paypal.me/stenrs)
 
 ## License
 
